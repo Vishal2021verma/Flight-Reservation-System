@@ -1,34 +1,24 @@
-public class Ticket {
+abstract class Ticket {
     //Attrributes
     private int pnrNo;
-    private int passangerIdT;
-    private String passengerNameT;
     private String ticketStatus;
     private String durationJourney;
+    Flight flight;
+    Passenger passenger;
     //constructor
     Ticket(){
-        this.durationJourney = "9 Hours";
         this.ticketStatus = "Empty";
     }
-    
-    //methods
-    public void setpnrNo(int pnrNo){
-        this.pnrNo =  pnrNo;
+    Ticket(Flight flight, Passenger passenger,int pnrNo){
+        this.flight = flight;
+        this.passenger = passenger; 
+        this.durationJourney = "9 Hours";
+        this.ticketStatus = "Confirmed";
+        this.pnrNo = pnrNo;
     }
+  
     public int getpnrNo(){
         return pnrNo;
-    }
-    public void setpassengerIdT(int passengerIdT){
-        this.passangerIdT =  passengerIdT;
-    }
-    public int getpassengerIdt(){
-        return passangerIdT;
-    }
-    public void setpassengerNameT(String passengerNameT){
-        this.passengerNameT = passengerNameT;
-    }
-    public String getpassengerNameT(){
-        return passengerNameT;
     }
     public String getdurationJourney(){
         return  durationJourney;
