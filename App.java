@@ -12,12 +12,14 @@ public class App {
 
     // method for Showing option on page 1
     public static void page1() {
+
         System.out.println("1. Book a Ticket");
         System.out.println("2. Check Seat Avilabilty");
         System.out.println("3. PNR Satus");
         System.out.println("4. Print Your Ticket");
         System.out.println("5. Cancel Ticket");
-        System.out.println("6. Update Your Profile");
+        System.out.println("6. Update Your Tourist Ticket Adrresses");
+        System.out.println("7. Upadate Your Profile");
         System.out.println("0. Exit");
     }
 
@@ -29,21 +31,62 @@ public class App {
         System.out.println("0. Main Menu");
     }
 
-    public static void main(String[] args) throws Exception {
-        // Scanner Object
-        Scanner takeInput = new Scanner(System.in);
-        Passenger[] p1 = new Passenger[100];//declare
-        int index = 0;
-        int passengerId = 401;
-        int pnrNo = 901;
+    public static void printTicketDetails(RegularTicket rt) {
+        System.out.println("----------Regular Ticket----------");
+        System.out.println("Ticket Type:       " + rt.getTicketType());
+        System.out.println("PNR Number:        " + rt.getpnrNo());
+        System.out.println("Passenger Name:    " + rt.passenger.getpName());
+        System.out.println("Passenger Id:      " + rt.passenger.getPassengerCount());
+        System.out.println("Seat Number:       " + rt.getSeatNo());
+        System.out.println("Ticket Status:     " + rt.getticketStatus());
+        System.out.println("Spacial Services - Food: " + rt.getspacialFood() + ", Water: " + rt.getspacialWater()
+                + ", Snacks: " + rt.getspacialSnacks());
+        System.out.println("Flight Name:       " + rt.flight.getFlightNameandNumber());
+        System.out.println("Flight Route:      " + rt.flight.getFlightRoute());
+        System.out.println(rt.flight.getDA());
+    }
 
-        Flight f1 = new Flight(3035, "AirWays", "Lucknow To New York");
-        //loop mian
+    public static void printTicketDetails(TouristTicket rt) {
+        System.out.println("----------Tourist Ticket----------");
+        System.out.println("Ticket Type:       " + rt.getTicketType());
+        System.out.println("PNR Number:        " + rt.getpnrNo());
+        System.out.println("Passenger Name:    " + rt.passenger.getpName());
+        System.out.println("Passenger Id:      " + rt.passenger.getPassengerCount());
+        System.out.println("Seat Number:       " + rt.getSeatNo());
+        System.out.println("Ticket Status:     " + rt.getticketStatus());
+        // System.out.println("Spacial Services --- Food: "+rt.getspacialFood()+" Water:
+        // "+rt.getspacialWater()+" Snacks: "+rt.getspacialSnacks());
+        System.out.println("Flight Name:       " + rt.flight.getFlightNameandNumber());
+        System.out.println("Flight Route:      " + rt.flight.getFlightRoute());
+        System.out.println(rt.flight.getDA());
+        System.out.println("-----------Tourist Hotel and Destination----------");
+        System.out.println("Hotel Name:        " + rt.getHotelName());
+        System.out.println("-----Destination------");
+        rt.getTAddress();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner takeInput = new Scanner(System.in);
+        Flight flight = new Flight(3030, "Sice Jet", "Lucknow to Yew York");
+        Passenger[] passenger = new Passenger[10];
+        RegularTicket[] regularTicket = new RegularTicket[10];
+        TouristTicket[] touristTickets = new TouristTicket[10];
+
+        for(int k = 0; k< 10;k++){
+            passenger[k] = new Passenger();
+            regularTicket[k] = new RegularTicket();
+            touristTickets[k] = new TouristTicket();
+        }
+        
+        int index = 0;
+        int pnrNo = 901;
+        // loop mian
         for (int i = 0; i <= 0;) {
             greet();
             // show page 1 option
             line();
-            //metthod will print page1 options 
+            // metthod will print page1 options
             page1();
             line();
             // take option input 1,2,3,0
@@ -97,19 +140,15 @@ public class App {
                     System.out.println("Enter Your Sapcial Snacks: ");
                     String spacialSnacks = takeInput.next();
 
-                    //
-                    p1[index] = new Passenger();//
-                    p1[index].setPassengerDetails(pname, page, pgender);
-                    p1[index].address.setAddressDetails(street, city, state);
-                    p1[index].contact.setConatactDetial(phoneNumber, emailId);
-                    p1[index].setpnrAllottedAndSeat(pnrNo);
-                    f1.bookRTicket(index, passengerId, pname, pnrNo, spacialFood, spacialWater, spacialSnacks);
+                    passenger[index] = new Passenger(pname, page, pgender, phoneNumber, emailId, street, city, state);
+                    regularTicket[index] = new RegularTicket(flight, passenger[index], pnrNo, index + 1);
+                    regularTicket[index].setSpecial(spacialFood, spacialWater, spacialSnacks);
+                    flight.setRegularTicketSeat(1);
                     line();
                     System.out.println("*****Your Regular Ticket is Booked Successfully");
                     System.out.println("*****Your PNR Number is: " + pnrNo);
                     line();
                     index++;
-                    passengerId++;
                     pnrNo++;
                 } else if (in2 == 2) {
                     line();
@@ -142,18 +181,34 @@ public class App {
                     line();
                     System.out.println("Enter Your Email ID: ");
                     String emailId = takeInput.next();
-                    p1[index] = new Passenger();
-                    p1[index].setPassengerDetails(pname, page, pgender);
-                    p1[index].address.setAddressDetails(street, city, state);
-                    p1[index].contact.setConatactDetial(phoneNumber, emailId);
-                    p1[index].setpnrAllottedAndSeat(pnrNo);
-                    f1.bookToTicket(index, passengerId, pname, pnrNo);
                     line();
+                    System.out.println("Enter Hotel Name: ");
+                    String hotelName = takeInput.next();
+                    line();
+                    System.out.println("Enter Location 1: ");
+                    String add1 = takeInput.next();
+                    line();
+                    System.out.println("Enter Location 2: ");
+                    String add2 = takeInput.next();
+                    line();
+                    System.out.println("Enter Location 3: ");
+                    String add3 = takeInput.next();
+                    line();
+                    System.out.println("Enter Location 4: ");
+                    String add4 = takeInput.next();
+                    line();
+                    System.out.println("Enter Location 5: ");
+                    String add5 = takeInput.next();
+                    line();
+                    
+                    passenger[index] = new Passenger(pname, page, pgender, phoneNumber, emailId, street, city, state);
+                    touristTickets[index] = new TouristTicket(flight, passenger[index], pnrNo, index + 1);
+                    touristTickets[index].setHotelNameandAddress(hotelName, add1, add2, add3, add4, add5);
+                    flight.setTouristTIcketSeat(1);
                     System.out.println("*****Your Tourist Ticket is Booked Successfully");
                     System.out.println("*****Your PNR Number is: " + pnrNo);
                     line();
                     index++;
-                    passengerId++;
                     pnrNo++;
                 } else if (in2 == 0) {
                     break;
@@ -162,15 +217,39 @@ public class App {
             // 2 option to Seat Avilavilty
             else if (in == 2) {
                 line();
-                f1.seatAvilabiltyCheck();
+                System.out.println("***********Seat Avilability of " + flight.getFlightNameandNumber() + "**********");
+                System.out.println("Total Nunmber of Seats Booked: " + flight.getNoofSeatsBooked());
+                System.out.println("Total Nunmber of Seats are Avilable: " + (100 - flight.getNoofSeatsBooked()));
                 line();
             }
             // 3 Option for to Check PNR status
             else if (in == 3) {
                 System.out.println("Enter Your PNR NO: ");
                 int pnrNum = takeInput.nextInt();
+                int indexs = -1;
+                for (int j = 0; j <10; j++) {
+                    if (pnrNum == regularTicket[j].getpnrNo()) {
+                        line();
+                        System.out.println("Your Seat No.: " + regularTicket[j].getSeatNo());
+                        System.out.println("Booking Status: " + regularTicket[j].getticketStatus());
+                        line();
+                        indexs++;
+                        break;
+                    } else if (pnrNum == touristTickets[j].getpnrNo()) {
+                        line();
+                        System.out.println("Your Seat No.: " + touristTickets[j].getSeatNo());
+                        System.out.println("Booking Status: " + touristTickets[j].getticketStatus());
+                        line();
+                        indexs++;
+                        break;
+                    } else {
+                    }
+                }
+                if (indexs == -1) {
+                    System.out.println("----------PNR Number Is Not Found----------");
+                }
                 line();
-                f1.pnrStatusCheck(pnrNum);
+                // f1.pnrStatusCheck(pnrNum);
             }
             // 4 Option for To print ticket
             else if (in == 4) {
@@ -179,9 +258,29 @@ public class App {
                 line();
                 System.out.println("Enter Your PNR NO: ");
                 int pnrNum = takeInput.nextInt();
-                line();
-                f1.printTicket(pnrNum);
-                line();
+                int indexs = -1;
+                for (int j = 0; j < 10; j++) {
+                    if (pnrNum == regularTicket[j].getpnrNo()) {
+                        line();
+                        printTicketDetails(regularTicket[j]);
+                        line();
+                        indexs++;
+                        break;
+                    } else if (pnrNum == touristTickets[j].getpnrNo()) {
+                        line();
+                        printTicketDetails(touristTickets[j]);
+                        line();
+                        indexs++;
+                        break;
+                    } else {
+                    }
+                }
+                if (indexs == -1) {
+                    System.out.println("----------PNR Number Is Not Found----------");
+                    line();
+                    // f1.printTicket(pnrNum);
+                    line();
+                }
             }
             // 5 Option for cancel ticket
             else if (in == 5) {
@@ -191,11 +290,98 @@ public class App {
                 System.out.println("Enter Your PNR NO: ");
                 int pnrNum = takeInput.nextInt();
                 line();
-                f1.cancelTicket(pnrNum);
+                int indexs = -1;
+                for(int j = 0; j <10;j++){
+                    if(pnrNum == regularTicket[j].getpnrNo()){
+                        regularTicket[j].setticketStatus("Cancelled");
+                        System.out.println("------------Your Ticket is Cancelled------------");
+                        indexs++;
+                        break;
+                    }
+                    else if(pnrNum == touristTickets[j].getpnrNo()) {
+                        touristTickets[j].setticketStatus("Cancelled");
+                        System.out.println("------------Your Ticket is Cancelled------------");
+                        indexs++;
+                        break;
+                    } else {}
+                }
+                if(indexs == -1){
+                    System.out.println("----------PNR Number Not Found----------");
+                }
                 line();
             }
-            // 0 option for to Exit Program
-            else if (in == 0) {
+            //6 option update your tourist ticket destination address
+            else if (in == 6) {
+                line();
+                System.out.println("-----Upadate Your Ticket Adresses------");
+                System.out.println("Enter Your PNR Number: ");
+                int pnrNum = takeInput.nextInt();
+                int indexs = -1;
+                for(int j = 0; j <10;j++){
+                    if(pnrNum == touristTickets[j].getpnrNo()) {
+                        line();
+                        System.out.println("Enter Hotel Name: ");
+                        String hotelName = takeInput.next();
+                        line();
+                        System.out.println("Enter Location 1: ");
+                        String add1 = takeInput.next();
+                        line();
+                        System.out.println("Enter Location 2: ");
+                        String add2 = takeInput.next();
+                        line();
+                        System.out.println("Enter Location 3: ");
+                        String add3 = takeInput.next();
+                        line();
+                        System.out.println("Enter Location 4: ");
+                        String add4 = takeInput.next();
+                        line();
+                        System.out.println("Enter Location 5: ");
+                        String add5 = takeInput.next();
+                        line();
+                        touristTickets[index].setHotelNameandAddress(hotelName, add1, add2, add3, add4, add5);
+                        indexs++;
+                        break;
+                    }
+                }
+                if(indexs == -1){
+                    System.out.println("----------PNR Number Not Found----------");
+                }
+
+
+                   
+            }
+            //update your profile
+            else if(in == 7){
+                line();
+                System.out.println("-----Upadate Your Ticket Adresses------");
+                System.out.println("Enter Your Passenger Id: ");
+                int pnrNum = takeInput.nextInt();
+                int indexs = -1;
+                for(int j = 0; j <10;j++){
+                    if(pnrNum == passenger[j].getPassengerCount()) {
+                        line();
+                        System.out.println("Enter Your Name: ");
+                        String pname = takeInput.next();
+                        line();
+                        System.out.println("Enter Your Age: ");
+                        int page = takeInput.nextInt();
+                        line();
+                        System.out.println("Enter Your Gender: ");
+                        String pgender = takeInput.next();
+                        line();
+                        passenger[j].updatePassengerDetails(pname, page, pgender);
+                        indexs++;
+                        System.out.println("-----"+passenger[j].getpName()+" your profile is update successfully-----");
+                        break;
+                    }
+                }
+                if(indexs == -1){
+                    System.out.println("----------Passenger Id Not Found----------");
+                }
+
+            }// 0 option for to Exit Program
+            
+            else if(in == 0){
                 i++;
             }
         }
