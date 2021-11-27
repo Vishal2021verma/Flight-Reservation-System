@@ -1,42 +1,74 @@
-class Passenger{
-    //Attributes
-    private int passangerId;
+class Passenger {
+    // Attributes
+    private static int idCounter = 0;
     private String pname;
     private int page;
-    private String  pgender;
-    //declare
-    Address address;
-    Contact contact;
-    int pnrNoAllotted;
-    //Constructor
-    Passenger(){
-        address = new Address();
-        contact = new Contact();
-    }
+    private String pgender;
+    // declare
+   
+    // Constructor
+    private static class Address {
+        // Attributes
+        String street;
+        String city;
+        String state;
 
-    //method
-    public void setPassengerDetails(String pname,int page, String pgender){
+        // constructor
+        public Address(String street, String city, String state) {
+            this.street = street;
+            this.city = city;
+            this.state = state;
+        }    
+    }
+    private Address address;
+
+    private static class Contact {
+        // Attributes
+        String phoneNumber;
+        String emailId;
+
+        // constructor
+        Contact(String phoneNumber, String emailId) {
+            this.phoneNumber = phoneNumber;
+            this.emailId = emailId;
+        }
+    }
+    private Contact contact;
+    Passenger(){}
+    public Passenger(String pname, int page, String pgender,String phone, String email,String street, String city, String state) {
+        address = new Address(street, city, state);
+        contact = new Contact(phone,email);
         this.pname = pname;
         this.page = page;
-        this.pgender= pgender;
+        this.pgender = pgender;
+        idCounter++;
     }
-    public void setpnrAllottedAndSeat(int pnrNoAllotted){
-        this.pnrNoAllotted = pnrNoAllotted;
+    //method
+    public String getcontactDetails(){
+        return contact.phoneNumber+ " "+ contact.emailId;
     }
-    public String getpName(){
+    public String getAddressDetails() {
+        return address.street + ", " + address.city + ", " + address.state;
+    }
+    public void updatePassengerDetails(String pname, int page, String pgender) {
+        this.pname = pname;
+        this.page = page;
+        this.pgender = pgender;
+    }
+    public String getpName() {
         return pname;
     }
-    public int getpAge(){
+
+    public int getpAge() {
         return page;
     }
-    public int getpassengerId(){
-        return passangerId;
+
+    public int getPassengerCount() {
+        return idCounter;
     }
-    public String getpGender(){
+
+    public String getpGender() {
         return pgender;
     }
-    public int getPnr(){
-        return pnrNoAllotted;
-    }
-   
+
 }
