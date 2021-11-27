@@ -219,7 +219,7 @@ public class App {
                 line();
                 System.out.println("***********Seat Avilability of " + flight.getFlightNameandNumber() + "**********");
                 System.out.println("Total Nunmber of Seats Booked: " + flight.getNoofSeatsBooked());
-                System.out.println("Total Nunmber of Seats are Avilable: " + (100 - flight.getNoofSeatsBooked()));
+                System.out.println("Total Nunmber of Seats are Avilable: " + (20 - flight.getNoofSeatsBooked()));
                 line();
             }
             // 3 Option for to Check PNR status
