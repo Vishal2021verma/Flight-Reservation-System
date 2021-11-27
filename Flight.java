@@ -45,6 +45,6 @@ public class Flight{
     }
     //getter
     public int getNoofSeatsBooked(){
-        return 100 - (this.regularTicketSeat + this.touristTicketSeat);
+        return 20 - (this.regularTicketSeat + this.touristTicketSeat);
     }
 }
